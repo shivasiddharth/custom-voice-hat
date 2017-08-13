@@ -1,0 +1,107 @@
+# Parts List
+1. Adafruit I2S MEMS Microphone Breakout - SPH0645LM4H - 2Nos - https://www.adafruit.com/product/3421
+2. Adafruit I2S 3W Class D Amplifier Breakout - MAX98357A - 1No - https://www.adafruit.com/product/3006
+3. GPIO Header for Raspberry Pi A+/B+/Pi 2/Pi 3 - 2x20 Female Header -1No - https://www.adafruit.com/product/2222
+4. Double sided prototyping board - 1No -https://goo.gl/4Uc5oG
+
+# Wire the Parts as indicated in the attached wiring diagram
+***CAUTION- Amplifier board should be powered using 5V and the mics using 3.3v***
+
+# Burn a fresh copy of Raspbian Jessie on an sd card for this developmental purpose
+
+# Following steps to be completed on the Pi.
+1. Turn on i2s support in /boot/config.txt with:
+sudo nano /boot/config.txt
+
+****Uncomment the following****
+#dtparam=i2s=on
+#dtparam=i2c_arm=on
+#dtparam=spi=on
+#dtparam=audio=on
+
+****Add the following new entry****
+dtoverlay=i2s-mmap
+
+Save and exit
+
+2. Add support for kernel modules using:
+sudo nano /etc/modules
+
+*****Add the following entires on new lines****
+snd-bcm2835
+snd_soc_bcm2708
+snd_soc_bcm2708_i2s
+bcm2708_dmaengine
+
+Save and exit
+
+3. Rebbot the Pi using:
+sudo reboot
+
+4. Update Pi using following commands:
+sudo apt-get update
+sudo apt-get install rpi-update
+sudo rpi-update
+
+5. Rebbot the Pi using:
+sudo reboot
+
+6. Install Kernel compilation dependencies using:
+sudo apt-get install bc libncurses5-dev
+
+7. Download kernel source and compile using:
+sudo wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source
+
+sudo chmod +x /usr/bin/rpi-source
+
+/usr/bin/rpi-source -q --tag-update
+
+rpi-source
+
+***ABOUT 150MB of data will be downloaded so sit back and relax***
+
+8. Compile kernels for i2s support:
+sudo mount -t debugfs debugs /sys/kernel/debug
+
+***You might get a message that /sys/kernel/debug is busy. this is abolutely fine, nothing to worry***
+
+9. Ensure that module name is 3f203000.i2s using:
+sudo cat /sys/kernel/debug/asoc/platforms
+
+10. Change directory to compile:
+cd /home/pi/custom-voice-hat/i2s-voice-hat
+
+11. Compile the module:
+make -C /lib/modules/$(uname -r )/build M=$(pwd) modules
+sudo insmod my_loader.ko
+
+12. Ensure that module was loaded:
+lsmod | grep my_loader
+dmesg | tail
+
+***If everything went weel, you should see a "i2s mapping ok" line***
+
+13. To auto load modules on startup, execute the following commands on after the another:
+sudo cp my_loader.ko /lib/modules/$(uname -r)
+echo 'my_loader' | sudo tee --append /etc/modules > /dev/null
+sudo depmod -a
+sudo modprobe my_loader
+
+13. Rebbot the Pi using:
+sudo reboot
+
+14. Setup audio configuration:
+***** First make the script executable*****
+sudo chmod +x /home/pi/custom-voice-hat/audio-config/scripts/custom-voice-hat.sh
+
+**** Execute the script untill you get a .bak notification****
+sudo /home/pi/custom-voice-hat/audio-config/scripts/custom-voice-hat.sh
+
+15. Check the mic's working using
+arecord -D plughw:1 -c2 -r 48000 -f S32_LE -t wav -V stereo -v mic_test.wav
+
+16. Playback the recorded file using:
+aplay mic_test.wav
+
+***********YOUR CUSTOM VOICE HAT IS READY FOR USE***********
+*********BACKUP THIS IMAGE FOR FUTURE PROJECTS. ELSE, YOU HAVE TO REPEAT THIS PROCESS AGAIN EACH AND EVERY TIME*********
