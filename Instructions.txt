@@ -6,6 +6,10 @@
 # Burn a fresh copy of Raspbian Jessie on an sd card for this developmental purpose
 
 # Following steps to be completed on the Pi.
+
+#Clone the project onto the pi
+git clone https://github.com/shivasiddharth/custom-voice-hat
+
 1. Turn on i2s support in /boot/config.txt with:
 sudo nano /boot/config.txt
 
