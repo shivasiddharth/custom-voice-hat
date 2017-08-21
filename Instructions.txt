@@ -31,7 +31,7 @@ cd /proc/device-tree/
 cd /home/pi/custom-voice-hat/eepromutils
 
 4. Flash the EEPROM with the eeprom file:
-sudo ./eepflash -w -f=voicehat.eep -t=24c32
+sudo ./eepflash.sh -w -f=voicehat.eep -t=24c32
 
 5. Update raspberry pi kernels:
 sudo apt-get update
@@ -52,12 +52,12 @@ cd /proc/device-tree/
 cd /home/pi/custom-voice-hat/audio-config/scripts/
 
 #Make the scripts executable:
-sudo chmod +x /custom-voice-hat.sh
-sudo chmod +x /install-i2s.sh
+sudo chmod +x ./custom-voice-hat.sh
+sudo chmod +x ./install-i2s.sh
 
 #Run the Executable scripts
-sudo /custom-voice-hat.sh
-sudo /install-i2s.sh
+sudo ./custom-voice-hat.sh
+sudo ./install-i2s.sh
 
 ****RUN THE custom-voice-hat.sh script untill you get .bak notification****
 ****REBOOT and Enjoy your HAT****
