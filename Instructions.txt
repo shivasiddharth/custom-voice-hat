@@ -1,8 +1,7 @@
 # Parts List
 1. Adafruit I2S MEMS Microphone Breakout - SPH0645LM4H - 2Nos - https://www.adafruit.com/product/3421
 2. Adafruit I2S 3W Class D Amplifier Breakout - MAX98357A - 1No - https://www.adafruit.com/product/3006
-3. GPIO Header for Raspberry Pi A+/B+/Pi 2/Pi 3 - 2x20 Female Header -1No - https://www.adafruit.com/product/2222
-4. Double sided prototyping board - 1No -https://goo.gl/4Uc5oG
+3. Adafruit Perma-Proto HAT for Pi Mini Kit - With EEPROM - 1No - https://www.adafruit.com/product/2314
 
 # Wire the Parts as indicated in the attached wiring diagram
 ***CAUTION- Amplifier board should be powered using 5V and the mics using 3.3v***
@@ -20,7 +19,7 @@ sudo nano /boot/config.txt
 #dtparam=audio=on
 
 ****Add the following new entry****
-dtoverlay=i2s-mmap
+dtparam=i2c_vc=on
 
 Save and exit
 
