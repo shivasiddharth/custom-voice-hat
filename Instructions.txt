@@ -30,7 +30,8 @@ cd /proc/device-tree/
 3. Open a new terminal and change directory to eepromutils:
 cd /home/pi/custom-voice-hat/eepromutils
 
-4. Flash the EEPROM with the eeprom file:
+4. Make the EEPROM flasher executable and Flash the EEPROM with the eeprom file:
+sudo chmod +x ./eepflash.sh
 sudo ./eepflash.sh -w -f=voicehat.eep -t=24c32
 
 5. Update raspberry pi kernels:
