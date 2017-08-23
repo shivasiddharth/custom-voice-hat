@@ -3,8 +3,6 @@
 2. Adafruit I2S 3W Class D Amplifier Breakout - MAX98357A - 1No - https://www.adafruit.com/product/3006
 3. Adafruit Perma-Proto HAT for Pi Mini Kit - With EEPROM - 1No - https://www.adafruit.com/product/2314
 
-# Burn a fresh copy of Raspbian Jessie on an sd card for this developmental purpose
-
 # Following steps to be completed on the Pi.
 
 #Clone the project onto the pi
